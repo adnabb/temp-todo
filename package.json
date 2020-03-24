@@ -1,0 +1,12 @@
+{
+  "name": "todoList",
+  "version": "0.0.1",
+  "description": "cmd todo list",
+  "main": "index.js",
+  "author": "vivi",
+  "license": "MIT",
+  "devDependencies": {
+    "commander": "^5.0.0",
+    "inquirer": "^7.1.0"
+  }
+}
