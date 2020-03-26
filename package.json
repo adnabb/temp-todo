@@ -13,8 +13,6 @@
   "license": "MIT",
   "dependencies": {
     "commander": "^5.0.0",
-    "global": "^4.4.0",
     "inquirer": "^7.1.0",
-    "temp-todo": "^0.0.5"
   }
 }
