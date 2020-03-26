@@ -1,6 +1,6 @@
 {
   "name": "temp-todo",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "bin": {
     "t": "src/cli.js"
   },
@@ -11,8 +11,12 @@
   "main": "src/index.js",
   "author": "vivi",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adnabb/temp-todo.git"
+  },
   "dependencies": {
     "commander": "^5.0.0",
-    "inquirer": "^7.1.0",
+    "inquirer": "^7.1.0"
   }
 }
