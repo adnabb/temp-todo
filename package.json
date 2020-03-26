@@ -1,12 +1,20 @@
 {
-  "name": "todoList",
-  "version": "0.0.1",
-  "description": "cmd todo list",
-  "main": "index.js",
+  "name": "temp-todo",
+  "version": "0.0.5",
+  "bin": {
+    "t": "src/cli.js"
+  },
+  "files": [
+    "src/*.js"
+  ],
+  "description": "cmd temp todo list",
+  "main": "src/index.js",
   "author": "vivi",
   "license": "MIT",
-  "devDependencies": {
+  "dependencies": {
     "commander": "^5.0.0",
-    "inquirer": "^7.1.0"
+    "global": "^4.4.0",
+    "inquirer": "^7.1.0",
+    "temp-todo": "^0.0.4"
   }
 }
