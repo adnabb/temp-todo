@@ -98,7 +98,7 @@ const actionMap = {
 };
 
 const handleTask = async (task) => {
-  const actions = [task.status ? 'todo' : 'done', 'edit', 'delete', 'exit'];
+  const actions = [task.status ? 'todo' : 'done', 'edit', 'delete'];
   const chosenAction = await chooseAction(actions);
 
   for (let i = 0; i < list.length; i++) {

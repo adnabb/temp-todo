@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
-const { program } = require('commander');const config = require('../package.json');
+const { program } = require('commander');
+const config = require('../package.json');
 const api = require('./index');
 const version = config.version;
 
