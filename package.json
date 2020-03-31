@@ -1,11 +1,11 @@
 {
   "name": "temp-todo",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "bin": {
     "t": "src/cli.js"
   },
   "files": [
-    "*.js"
+    "**/*.js"
   ],
   "description": "cmd temp todo list",
   "main": "src/index.js",
