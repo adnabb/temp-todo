@@ -1,9 +1,10 @@
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
+const { db } = require('../config');
 const homeDir = os.homedir();
 const home = process.env.HOME || homeDir;
-const dbPath = path.join(home, '.todo');
+const dbPath = path.join(home, db);
 
 let list;
 

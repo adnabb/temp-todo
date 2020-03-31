@@ -2,6 +2,7 @@ const db = require('./db');
 const inquirer = require('inquirer');
 
 let list;
+let listFilterCondition = '';
 
 const add = async (argv) => {
   const params = argv.slice(3);
@@ -18,13 +19,23 @@ const statusMap = {
   done: true,
 };
 
-const showListAndSelectTask = async (filterCondition) => {
+const filterList = (list) => {
+  if (listFilterCondition === 'todo' || listFilterCondition === 'done') return list.filter((item) => item.status === statusMap[listFilterCondition]);
+
+  return list;
+}
+
+const sortList = (list) => {
+  return list.sort((a, b) => a.status - b.status);
+}
+
+const showListAndSelectTask = async () => {
   list = await db.read();
 
-  if (filterCondition === 'todo' || filterCondition === 'done') list = list.filter((item) => item.status === statusMap[filterCondition]);
-  if (!list.length) { console.info('there is no relative task'); return; }
+  const filterdList = sortList(filterList(list));
+  if (!filterdList.length) { console.info('there is no relative task'); return; }
 
-  const _list = JSON.parse(JSON.stringify(list))
+  const _list = JSON.parse(JSON.stringify(filterdList))
     .map((item) => item.name = `[${item.status ? 'x' : '_'}] ${item.name}`)
     .sort((a, b) => a.status - b.status);
 
@@ -39,7 +50,7 @@ const showListAndSelectTask = async (filterCondition) => {
         ],
         filter: (showName) => {
           const name = showName.slice(3).trim();
-          return list.filter((item) => item.name === name)[0];
+          return filterdList.filter((item) => item.name === name)[0];
         },
       }
     ]);
@@ -61,19 +72,20 @@ const chooseAction = async (actions) => {
     });
 }
 
-const commonHandle = async (message) => {
+const commonHandle = async (list, message) => {
   await db.write(list);
   console.info(message);
+  handleList(listFilterCondition);
 }
 
-const changeTaskStatus = (index) => {
+const changeTaskStatus = async (index) => {
   list[index].status = !list[index].status;
-   commonHandle(list, 'status changed!');
+   await commonHandle(list, 'status changed!');
 }
 
-const deleteTask = (index) => {
+const deleteTask = async(index) => {
   list.splice(index, 1);
-  return commonHandle(list, 'delete successfully!');
+  await commonHandle(list, 'delete successfully!');
 }
 
 const editTaskName = async (index) => {
@@ -88,6 +100,7 @@ const editTaskName = async (index) => {
   }]);
   await db.write(editedList.list);
   console.info('edit successfully!');
+  handleList(listFilterCondition);
 }
 
 const actionMap = {
@@ -98,27 +111,42 @@ const actionMap = {
 };
 
 const handleTask = async (task) => {
-  const actions = [task.status ? 'todo' : 'done', 'edit', 'delete'];
-  const chosenAction = await chooseAction(actions);
+  const customActions = [task.status ? 'todo' : 'done', 'edit', 'delete', 'back'];
+  const { action: chosenAction } = await chooseAction(customActions);
+
+  if (chosenAction === 'back') {
+    handleList(listFilterCondition);
+    return;
+  }
 
   for (let i = 0; i < list.length; i++) {
     const item = list[i];
-    if (item.name === task.name) actionMap[chosenAction.action](i);
+    if (item.name === task.name) {
+      actionMap[chosenAction](i);
+    }
   }
 }
 
-const handleList = async (filterCondition) => {
-  const selected = await showListAndSelectTask(filterCondition);
+const handleList = async (filterCondition='') => {
+  listFilterCondition = filterCondition;
+  const selected = await showListAndSelectTask();
   if (selected) await handleTask(selected.selected);
 }
 
-const clear = async (filterCondition) => {
+const getClearedList = (list, clearCondition) =>　{
+  if (clearCondition === 'todo' || clearCondition === 'done') {
+    return list.filter((item) => item.status !== statusMap[clearCondition]);
+  }
+
+  return [];
+}
+
+const clear = async (clearCondition) => {
   list = await db.read();
-  if (filterCondition === 'todo' || filterCondition === 'done') {
-    list = list.filter((item) => item.status !== statusMap[filterCondition]);
-  } else { list = []; }
-  await db.write(list);
-  console.info('cleared');
+  const cleardList = getClearedList(list, clearCondition);
+  await db.write(cleardList);
+  console.info(`${clearCondition || 'all'} cleared`);
+  handleList();
 }
 
 module.exports = {

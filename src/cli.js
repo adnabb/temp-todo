@@ -13,7 +13,7 @@ const version = config.version;
   .action(() => api.add(process.argv));
 
   program
-  .command('list')
+  .command('ls')
   .option('[todo|done], list todo/done/add lists')
   .description('add (a) task(s)')
   .action((env) => {
