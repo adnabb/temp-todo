@@ -6,15 +6,24 @@ temp-todo是一款暂时备忘录，当我们在编程时突然想到一些事�
 
 全局安装
 ```
-yarn add global temp-todo
+yarn global add temp-todo
 // or
 npm install -g temp-todo
-``
+```
 
 下载完成后可以直接执行命令t
 
 ```
 t
+```
+
+---
+
+特别的，如果曾经安装但需要更新请先全局卸载后再次安装
+
+```
+yarn global remove temp-todo
+yarn global add temp-todo
 ```
 
 ## 功能介绍
