@@ -1,10 +1,10 @@
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
-const { db } = require('../config/index.js');
+const { fileName } = require('../config');
 const homeDir = os.homedir();
 const home = process.env.HOME || homeDir;
-const dbPath = path.join(home, db);
+const dbPath = path.join(home, fileName);
 
 let list;
 

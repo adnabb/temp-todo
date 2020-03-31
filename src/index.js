@@ -6,18 +6,13 @@ let listFilterCondition = '';
 
 const add = async (argv) => {
   const params = argv.slice(3);
-  const tasks = params.map(name => ({
-    name, status: false
-  }));
+  const tasks = params.map(name => ({ name, status: false }));
   list = await db.read();
   await db.write([...list, ...tasks]);
   console.info(`"${params}"添加成功`);
 };
 
-const statusMap = {
-  todo: false,
-  done: true,
-};
+const statusMap = { todo: false, done: true, };
 
 const filterList = (list) => {
   if (listFilterCondition === 'todo' || listFilterCondition === 'done') return list.filter((item) => item.status === statusMap[listFilterCondition]);
@@ -25,9 +20,7 @@ const filterList = (list) => {
   return list;
 }
 
-const sortList = (list) => {
-  return list.sort((a, b) => a.status - b.status);
-}
+const sortList = (list) => { return list.sort((a, b) => a.status - b.status); }
 
 const showListAndSelectTask = async () => {
   list = await db.read();
@@ -45,9 +38,7 @@ const showListAndSelectTask = async () => {
         type: 'list',
         message: 'Select task',
         name: 'selected',
-        choices: [
-          ..._list,
-        ],
+        choices: [..._list],
         filter: (showName) => {
           const name = showName.slice(3).trim();
           return filterdList.filter((item) => item.name === name)[0];
@@ -63,9 +54,7 @@ const chooseAction = async (actions) => {
         type: 'list',
         message: 'Select action',
         name: 'action',
-        choices: [
-          ...actions,
-        ],
+        choices: [...actions],
       }
     ]).then((res) => {
       return res;
@@ -80,10 +69,10 @@ const commonHandle = async (list, message) => {
 
 const changeTaskStatus = async (index) => {
   list[index].status = !list[index].status;
-   await commonHandle(list, 'status changed!');
+  await commonHandle(list, 'status changed!');
 }
 
-const deleteTask = async(index) => {
+const deleteTask = async (index) => {
   list.splice(index, 1);
   await commonHandle(list, 'delete successfully!');
 }
@@ -121,19 +110,17 @@ const handleTask = async (task) => {
 
   for (let i = 0; i < list.length; i++) {
     const item = list[i];
-    if (item.name === task.name) {
-      actionMap[chosenAction](i);
-    }
+    if (item.name === task.name) { actionMap[chosenAction](i); }
   }
 }
 
-const handleList = async (filterCondition='') => {
+const handleList = async (filterCondition = '') => {
   listFilterCondition = filterCondition;
   const selected = await showListAndSelectTask();
   if (selected) await handleTask(selected.selected);
 }
 
-const getClearedList = (list, clearCondition) =>　{
+const getClearedList = (list, clearCondition) => {
   if (clearCondition === 'todo' || clearCondition === 'done') {
     return list.filter((item) => item.status !== statusMap[clearCondition]);
   }

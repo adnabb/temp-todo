@@ -8,17 +8,17 @@ const version = config.version;
   program.version(version);
 
   program
-  .command('add <task>')
-  .description('add (a) task(s)')
-  .action(() => api.add(process.argv));
-
-  program
   .command('ls')
   .option('[todo|done], list todo/done/add lists')
   .description('add (a) task(s)')
   .action((env) => {
     api.handleList(env.args[0]);
   });
+
+  program
+  .command('add <task>')
+  .description('add (a) task(s)')
+  .action(() => api.add(process.argv));
 
   program
   .command('clear')
