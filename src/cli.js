@@ -5,12 +5,12 @@ const config = require('../package.json');
 const api = require('./index');
 const version = config.version;
 
-  program.version(version);
+  program.version(version).name('t');
 
   program
   .command('ls')
   .option('[todo|done], list todo/done/add lists')
-  .description('add (a) task(s)')
+  .description('list tasks and handle it')
   .action((env) => {
     api.handleList(env.args[0]);
   });
