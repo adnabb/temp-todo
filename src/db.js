@@ -9,22 +9,18 @@ const dbPath = path.join(home, fileName);
 let list;
 
 module.exports = {
-  read: () => {
+  read: (path=dbPath) => {
     return new Promise((resolve) => {
-      fs.readFile(dbPath, { encoding: 'utf8', flag: 'a+' }, (err, data) => {
+      fs.readFile(path, { encoding: 'utf8', flag: 'a+' }, (err, data) => {
         if (err) throw err;
-        if (data) {
-          list = JSON.parse(data);
-        } else {
-          list = [];
-        }
+        if (data) { list = JSON.parse(data); } else { list = []; }
         resolve(list);
       });
     });
   },
-  write: (list) => {
+  write: (list, path=dbPath) => {
     return new Promise((resolve) => {
-      fs.writeFile(dbPath, JSON.stringify(list), { flag: 'w' }, (err) => {
+      fs.writeFile(path, JSON.stringify(list), { flag: 'w' }, (err) => {
         if (err) throw err;
         resolve();
       });
