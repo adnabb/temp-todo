@@ -18,9 +18,9 @@ const filterList = (list) => {
   if (listFilterCondition === 'todo' || listFilterCondition === 'done') return list.filter((item) => item.status === statusMap[listFilterCondition]);
 
   return list;
-}
+};
 
-const sortList = (list) => { return list.sort((a, b) => a.status - b.status); }
+const sortList = (list) => { return list.sort((a, b) => a.status - b.status); };
 
 const showListAndSelectTask = async () => {
   list = await db.read();
@@ -59,29 +59,30 @@ const chooseAction = async (actions) => {
     ]).then((res) => {
       return res;
     });
-}
+};
 
 const commonHandle = async (list, message) => {
   await db.write(list);
   console.info(message);
   handleList(listFilterCondition);
-}
+};
 
 const changeTaskStatus = async (index) => {
   list[index].status = !list[index].status;
   await commonHandle(list, 'status changed!');
-}
+};
 
 const deleteTask = async (index) => {
   list.splice(index, 1);
   await commonHandle(list, 'delete successfully!');
-}
+};
 
 const editTaskName = async (index) => {
   const editedList = await inquirer.prompt([{
     type: 'input',
     name: 'list',
-    message: "you can change your taskName now",
+    message: "new taskName",
+    default: list[index].name,
     filter: (name) => {
       list[index].name = name;
       return list;
@@ -90,7 +91,7 @@ const editTaskName = async (index) => {
   await db.write(editedList.list);
   console.info('edit successfully!');
   handleList(listFilterCondition);
-}
+};
 
 const actionMap = {
   done: changeTaskStatus,
@@ -112,13 +113,13 @@ const handleTask = async (task) => {
     const item = list[i];
     if (item.name === task.name) { actionMap[chosenAction](i); }
   }
-}
+};
 
 const handleList = async (filterCondition = '') => {
   listFilterCondition = filterCondition;
   const selected = await showListAndSelectTask();
   if (selected) await handleTask(selected.selected);
-}
+};
 
 const getClearedList = (list, clearCondition) => {
   if (clearCondition === 'todo' || clearCondition === 'done') {
@@ -126,7 +127,7 @@ const getClearedList = (list, clearCondition) => {
   }
 
   return [];
-}
+};
 
 const clear = async (clearCondition) => {
   list = await db.read();
@@ -134,7 +135,7 @@ const clear = async (clearCondition) => {
   await db.write(cleardList);
   console.info(`${clearCondition || 'all'} cleared`);
   handleList();
-}
+};
 
 module.exports = {
   add,
