@@ -53,3 +53,5 @@ t clear todo // 清空已完成列表
 
 t clear done // 清空未完成列表
 ```
+
+![4ky59-wg0mv.gif](https://i.loli.net/2020/04/06/etWNLb45uxYm7s3.gif)
