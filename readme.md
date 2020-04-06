@@ -11,10 +11,10 @@ yarn global add temp-todo
 npm install -g temp-todo
 ```
 
-下载完成后可以直接执行命令t
+下载完成后可以直接执行命令t -h查看所有命令
 
 ```
-t
+t -h
 ```
 
 ---
@@ -28,7 +28,14 @@ yarn global add temp-todo
 
 ## 功能介绍
 
-1. 查看todo list列表，可选择任意task后对其进行
+1. 添加新任务（添加多个任务用空格隔开）
+```
+t add 你想添加的备忘1 你想添加的备忘2 ...
+```
+
+![4ky59-wg0mv.gif](https://i.loli.net/2020/04/06/etWNLb45uxYm7s3.gif)
+
+2. 查看todo list列表，可选择任意task后对其进行一下操作：
 
 - 状态修改（切换todo或done）
 - 内容修改
@@ -38,11 +45,9 @@ yarn global add temp-todo
 ```
 t ls
 ```
+**支持直接输入t，查询全部列表**
 
-2. 添加新任务（添加多个任务用空格隔开）
-```
-t add 你想添加的备忘1 你想添加的备忘2 ...
-```
+**支持部分查询,** 只查询todo列表 `t ls todo`，只查询done列表`t ls done`
 
 3. 清空todo list清单（默认全部清空）
 
@@ -53,5 +58,3 @@ t clear todo // 清空已完成列表
 
 t clear done // 清空未完成列表
 ```
-
-![4ky59-wg0mv.gif](https://i.loli.net/2020/04/06/etWNLb45uxYm7s3.gif)
