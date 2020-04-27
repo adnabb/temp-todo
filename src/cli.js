@@ -18,15 +18,14 @@ const setCommand = () => {
 
   program
     .command('add <task>')
-    .description('add (a) task(s)')
+    .description('add (a) task(s) spliting by ; or ；')
     .action(() => api.add(process.argv));
 
   program
-    .command('clear')
-    .option('[todo|done], clear todo/done/add lists')
-    .description('clear tasks')
+    .command('clear <type>')
+    .description('clear tasks, type inclueing todo done and all')
     .action((env) => {
-      api.clear(env.args[0]);
+      api.clear(env);
     });
 };
 

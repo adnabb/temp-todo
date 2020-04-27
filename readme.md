@@ -28,14 +28,12 @@ yarn global add temp-todo
 
 ## 功能介绍
 
-1. 添加新任务（添加多个任务用空格隔开）
+1. 添加新任务（添加多个任务用分号隔开，**中英文状态下的分号均可**）
 ```
-t add 你想添加的备忘1 你想添加的备忘2 ...
+t add 你想添加的备忘1；你想添加的备忘2；aa;vv ...
 ```
 
-![4ky59-wg0mv.gif](https://i.loli.net/2020/04/06/etWNLb45uxYm7s3.gif)
-
-2. 查看todo list列表，可选择任意task后对其进行一下操作：
+1. 查看todo list列表，可选择任意task后对其进行一下操作：
 
 - 状态修改（切换todo或done）
 - 内容修改
@@ -49,10 +47,10 @@ t ls
 
 **支持部分查询,** 只查询todo列表 `t ls todo`，只查询done列表`t ls done`
 
-3. 清空todo list清单（默认全部清空）
+1. 清空todo list清单
 
 ```
-t clear // 清空全部
+t clear all// 清空全部
 
 t clear todo // 清空已完成列表
 

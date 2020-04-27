@@ -5,7 +5,9 @@ let list;
 let listFilterCondition = '';
 
 const add = async (argv) => {
-  const params = argv.slice(3);
+  const params = argv.slice(3).join(' ').split(/;|；/);
+  const len = params.length;
+  if (!params[len - 1]) params.splice(-1, 1);
   const tasks = params.map(name => ({ name, status: false }));
   list = await db.read();
   await db.write([...list, ...tasks]);
@@ -124,16 +126,16 @@ const handleList = async (filterCondition = '') => {
 const getClearedList = (list, clearCondition) => {
   if (clearCondition === 'todo' || clearCondition === 'done') {
     return list.filter((item) => item.status !== statusMap[clearCondition]);
+  } else if (clearCondition === 'all') {
+    return [];
   }
-
-  return [];
 };
 
 const clear = async (clearCondition) => {
   list = await db.read();
   const cleardList = getClearedList(list, clearCondition);
   await db.write(cleardList);
-  console.info(`${clearCondition || 'all'} cleared`);
+  console.info(`${clearCondition} cleared`);
   handleList();
 };
 
